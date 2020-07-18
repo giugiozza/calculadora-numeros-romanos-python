@@ -1,6 +1,7 @@
 linhas = []
 dicionario_de_unidades = {}
 dicionario_de_creditos = {}
+quantidade_de_creditos = 0
 
 print("Seja bem-vind@, Vendedor Interespacial!\n")
 
@@ -21,19 +22,23 @@ for linha in linhas:
             array_da_linha = linha.partition("representa")
             dicionario_de_unidades[array_da_linha[0].strip()] = array_da_linha[2].strip()
         elif (linha.endswith("créditos")):
-            linha.replace('créditos', '')
+            linha = linha.replace("créditos", "")
             array_da_linha = linha.partition("valem")
-            dicionario_de_creditos[array_da_linha[0].strip()] = array_da_linha[2].strip()
+            quantidade_de_creditos = int(array_da_linha[2].strip())
+            dicionario_de_creditos[array_da_linha[0].strip()] = quantidade_de_creditos
     elif (linha.startswith("quanto vale")):
-        linha.replace('?', '')
+        linha = linha.replace('?', '')
         array_da_linha = linha.partition("são")
         #TODO
-        #<função calcula valor> = array_da_linha[2].strip()
+        #<parametro para função calcula valor> = array_da_linha[2].strip()
     elif (linha.startswith("quantos créditos")):
-        linha.replace('?', '')
+        linha = linha.replace('?', ' ')
         array_da_linha = linha.partition("são")
         #TODO
-        #<função calcula credito> = array_da_linha[2].strip()
+        #<parametro para função calcula credito> = array_da_linha[2].strip()
+print(dicionario_de_unidades)
+print(dicionario_de_creditos)
+
 '''
 print(len(linhas))
 print("\n" + linhas[-1]+"\n")
