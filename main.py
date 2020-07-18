@@ -5,7 +5,14 @@ nome_arquivo = nome_arquivo + ".txt"
 
 try:
     arquivo = open(nome_arquivo)
+    print("Arquivo aberto com sucesso.\n")
 except:
     print("Arquivo não encontrado.")
 
+
+
+try:
+    arquivo.close()
+except:
+    print("Erro ao fechar o arquivo.")
 
