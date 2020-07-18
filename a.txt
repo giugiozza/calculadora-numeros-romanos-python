@@ -1,0 +1,12 @@
+snob representa I
+krok representa V
+squid representa X
+leij representa L
+snob snob Prata valem 34 créditos
+snob krok Ouro valem 57800 créditos
+squid squid Iron valem 3910 créditos
+quanto vale squid leij snob snob ?
+quantos créditos são snob krok Silver ?
+quantos créditos são snob krok Gold ?
+quantos créditos são snob krok Iron ?
+quanto vale wood could woodchuck mood ?
