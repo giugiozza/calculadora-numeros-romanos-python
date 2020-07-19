@@ -1,12 +1,16 @@
 linhas = []
-valor = 0
 lista_de_materiais = []
 
+class Contador:
+    def __init__(self, simbolo, quantidade):
+        self.simbolo = simbolo
+        self.quantidade = quantidade
+
 class Material:
-  def __init__(self, nome, romano, valor):
-    self.nome = nome
-    self.romano = romano
-    self.valor = valor
+    def __init__(self, nome, romano, valor):
+        self.nome = nome
+        self.romano = romano
+        self.valor = valor
 
 def conversor_de_romanos_para_arabicos(romano):
     if(romano == "I"):
@@ -27,12 +31,78 @@ def conversor_de_romanos_para_arabicos(romano):
         return -1 #erro: não é romano
 
 def calculadora_de_romanos(romano):
-    valor = 0
-    if(len(romano) == 1):
-        valor = conversor_de_romanos_para_arabicos(romano.upper())
-    #else:
+    romano = romano.upper()
+    total = 0
+    simbolo_atual = ""
+    simbolo_anterior = ""
+    valor_atual = 0
+    valor_anterior = 0
+    atual_foi_calculado = False
+    contador = Contador("", 1)
+
+    if (len(romano) == 1):
+        total = conversor_de_romanos_para_arabicos(romano)
         
-    return valor
+    else:
+        for i in reversed(range(len(romano))): # leitura reversa do número, caractere a caractere
+            
+                simbolo_atual = romano[i:i+1]
+                valor_atual = conversor_de_romanos_para_arabicos(simbolo_atual)
+                if (valor_atual == -1):
+                    return -1
+                if(simbolo_atual != contador.simbolo):
+                    contador = Contador("", 1)
+                if(i == 0): #quando chegar no primeiro caractere
+                    if(not atual_foi_calculado):
+                        total = total + valor_atual
+                    break
+
+                simbolo_anterior = romano[i-1:i]
+                valor_anterior = conversor_de_romanos_para_arabicos(simbolo_anterior)
+                if (valor_anterior == -1):
+                    return -1
+                
+                #3 casos para os valores do atual e anterior: <, >, ==
+                if(valor_anterior < valor_atual):
+                    if(simbolo_anterior == "I"):
+                        if(simbolo_atual == "V" or simbolo_atual == "X"):
+                            if(not atual_foi_calculado):
+                                total = total + (valor_atual - valor_anterior)
+                                atual_foi_calculado = True
+
+                    elif(simbolo_anterior == "X"):
+                        if(simbolo_atual == "L" or simbolo_atual == "C"):
+                            if(not atual_foi_calculado):
+                                total = total + (valor_atual - valor_anterior)
+                                atual_foi_calculado = True
+
+                    elif(simbolo_anterior == "C"):
+                        if(simbolo_atual == "D" or simbolo_atual == "M"):
+                            if(not atual_foi_calculado):
+                                total = total + (valor_atual - valor_anterior)
+                                atual_foi_calculado = True
+                            
+                    else:
+                        return -1
+                    
+                elif(valor_anterior > valor_atual):
+                    if(not atual_foi_calculado):
+                        total = total + valor_atual
+                    atual_foi_calculado = False
+
+                elif(valor_anterior == valor_atual):
+                    if(simbolo_atual == "D" or simbolo_atual == "L" or simbolo_atual == "V"):
+                        return -1
+
+                    contador.simbolo = simbolo_atual
+                    contador.quantidade = contador.quantidade + 1
+                    if(contador.quantidade > 3):
+                        return -1
+                    elif(not atual_foi_calculado):
+                        total = total + valor_atual
+                    atual_foi_calculado = False
+                                
+    return total
 
 def calculadora_de_creditos(item):
     #TODO
@@ -68,12 +138,13 @@ linhas = arquivo_entrada.readlines()
     # e valores negativos
 for linha in linhas:
     linha = linha.rstrip()
+    valor = 0
     if not(linha.endswith("?")):
         if not(linha.endswith("créditos")):
             array_da_linha = linha.partition("representa")
             nome = array_da_linha[0].strip()
             romano = array_da_linha[2].strip()
-            valor = calculadora_de_romanos(array_da_linha[2].strip())
+            valor = calculadora_de_romanos(romano)
             lista_de_materiais.append(Material(nome, romano, valor))
         elif (linha.endswith("créditos")):
             linha = linha.replace("créditos", "")
@@ -87,13 +158,16 @@ for linha in linhas:
         resposta = "{} vale {}\n"
         encontrou = False
         for i in lista_de_materiais:
-            if item in i.nome:
-                valor = i.valor
-                material = i.nome
-                arquivo_saida.write(resposta.format(material, valor))
+            if (item == i.nome):
                 encontrou = True
+                valor = i.valor
+                if (valor == -1):
+                    arquivo_saida.write("Nem ideia do que isto significa!\n")
+                else:
+                    material = i.nome
+                    arquivo_saida.write(resposta.format(material, valor))
         if not(encontrou):
-                arquivo_saida.write("Nem ideia do que isto significa!")
+                arquivo_saida.write("Nem ideia do que isto significa!\n")
         
 
         #TODO
@@ -105,19 +179,6 @@ for linha in linhas:
 
         #TODO
         #<parametro para função calcula credito> = array_da_linha[2].strip()
-
-# for tipo_de_pergunta, item in dicionario_de_perguntas.items():
-#     if(tipo_de_pergunta == "credito"):
-#         resposta = "{} custa {} créditos"
-#         valor = calculadora_de_creditos(item)
-#         print(resposta.format(item, valor))
-#     elif(tipo_de_pergunta == "valor"):
-#         resposta = "{} vale {}"
-#         valor = calculadora_de_romanos(dicionario_de_unidades[item])
-#         print(resposta.format(item, valor))
-#     else:
-#         print("Nem ideia do que isto significa!")
-
 
 # FINAL #
 
