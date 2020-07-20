@@ -130,9 +130,13 @@ def atualiza_lista_materiais(pedido, credito):
                         novo_romano = novo_romano + i.romano
 
         soma = calculadora_de_romanos(novo_romano)
-        valor = credito / soma
-        lista_de_materiais.append(Material(novo_material, valor))
 
+        try:
+            valor = credito / soma
+        except:
+            print("Erro ao calcular o valor do material.")
+
+        lista_de_materiais.append(Material(novo_material, valor))
     except:
         print("Erro ao incluir material na lista.")
 
