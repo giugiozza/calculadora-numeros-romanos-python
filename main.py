@@ -139,19 +139,34 @@ def atualiza_lista_materiais(pedido, credito):
 def conversor_de_pedidos(lista):
         soma = 0
         novo_romano = ""
+        valor_material = 0
+        tem_material = False
 
         for i in lista:
             encontrou = False
+            if (i == i.capitalize()): # Primeira letra maiúscula = material --> separar para multiplicar
+                for m in lista_de_materiais:
+                    if(i == m.nome):
+                        valor_material = m.valor
+                        tem_material = True
+                        encontrou = True
+                        break
+                if(not encontrou):
+                    return -1
+            else:
+                for unidade in lista_de_unidades:
+                    if(i == unidade.nome):
+                        novo_romano = novo_romano + unidade.romano
+                        encontrou = True
+                        break
+                if(not encontrou):
+                    return -1
 
-            for unidade in lista_de_unidades:
-                if(i == unidade.nome):
-                    novo_romano = novo_romano + unidade.romano
-                    encontrou = True
-                    break
-            if(not encontrou):
-                return -1
+        if(tem_material):
+            soma = calculadora_de_romanos(novo_romano) * valor_material
+        else:
+            soma = calculadora_de_romanos(novo_romano)
 
-        soma = calculadora_de_romanos(novo_romano)
         return soma
 
 
@@ -210,19 +225,20 @@ for linha in linhas:
             arquivo_saida.write("Nem ideia do que isto significa!\n")
         else:
             resposta = "{} vale {}\n"
-            arquivo_saida.write(resposta.format(pedido, valor))
+            arquivo_saida.write(resposta.format(pedido, int(valor)))
     
-    #TODO
     elif (linha.startswith("quantos créditos")):
         linha = linha.replace('?', '')
         array_da_linha = linha.partition("são")
-        #dicionario_de_perguntas["credito"] = array_da_linha[2].strip()
-
-        #TODO
-        #<parametro para função calcula credito> = array_da_linha[2].strip()
-
-# FINAL #
-
+        pedido = array_da_linha[2].strip()
+        itens = pedido.split(" ")
+        valor = conversor_de_pedidos(itens)
+        if (valor == -1):
+            arquivo_saida.write("Nem ideia do que isto significa!\n")
+        else:
+            resposta = "{} custa {} créditos\n"
+            arquivo_saida.write(resposta.format(pedido, int(valor)))
+    
 try:
     arquivo_entrada.close()
 except:
