@@ -1,4 +1,4 @@
-# Calculadora Intergaláctica
+## Calculadora Intergaláctica
 Trata-se de um desafio de programação que consistia em uma calculadora de números romanos para transações intergalácticas desenvolvido em python3.
 
 Para utilizar o programa, salve o arquivo de texto referente à conversão entre unidades intergalácticas e numerais romanos na mesma pasta que contém o programa.
