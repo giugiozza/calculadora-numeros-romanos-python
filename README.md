@@ -6,7 +6,7 @@ Para utilizar o programa, salve o arquivo de texto referente à conversão entre
 As entradas para o programa consistem de linhas de texto em um arquivo texto detalhando as anotações sobre a conversão entre unidades intergalácticas e numerais romanos.
 Como se pode ver abaixo, as entradas podem ter até 7 linhas iniciais indicando a notação intergaláctica dos símbolos romanos, seguida de 0 ou mais linhas indicando o valor em créditos do número de unidades (expresso em intergaláctico) de metal sendo vendido. Na sequência, linhas com perguntas “quanto vale” / ”quantos créditos são”. Na última linha, um exemplo do que deve acontecer com uma anotação inválida.
 
-####Exemplo de arquivo de entrada:
+#### Exemplo de arquivo de entrada:
 
 ------------
 
@@ -37,7 +37,7 @@ quanto vale wood could woodchuck mood ?
 ------------
 
 
-####Exemplo de arquivo de saída:
+#### Exemplo de arquivo de saída:
 
 ------------
 squid leij snob snob vale 42
