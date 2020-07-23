@@ -32,7 +32,6 @@ quantos créditos são snob krok Gold ?
 quantos créditos são snob krok Iron ?
                 
 quanto vale wood could woodchuck mood ?
-
 ------------
 
 
@@ -47,5 +46,4 @@ snob krok Gold custa 57800 créditos
 snob krok Iron custa 782 créditos
                 
 Nem ideia do que isto significa!
-
 ------------
